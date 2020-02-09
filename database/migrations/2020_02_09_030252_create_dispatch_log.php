@@ -15,7 +15,7 @@ class CreateDispatchLog extends Migration
     {
         Schema::create('dispatch_log', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('call_id')->unsigned();
+            $table->bigInteger('call_id')->unsigned();
             $table->foreign('call_id')->references('id')->on('call');
             $table->mediumText('dispatch_message');
             $table->timestamps();

@@ -15,8 +15,8 @@ class CreateCallProperty extends Migration
     {
         Schema::create('call_property', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('property_id')->unsigned();
-            $table->integer('call_id')->unsigned();
+            $table->bigInteger('property_id')->unsigned();
+            $table->bigInteger('call_id')->unsigned();
             $table->foreign('property_id')->references('id')->on('property');
             $table->foreign('call_id')->references('id')->on('call');
             $table->string('status',1)->nullable();

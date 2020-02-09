@@ -15,8 +15,8 @@ class CreateScore extends Migration
     {
         Schema::create('score', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('call_id')->unsigned();
-            $table->integer('broker_id')->unsigned();
+            $table->bigInteger('call_id')->unsigned();
+            $table->bigInteger('broker_id')->unsigned();
             $table->foreign('call_id')->references('id')->on('call');
             $table->foreign('broker_id')->references('id')->on('broker');
             $table->integer('score');

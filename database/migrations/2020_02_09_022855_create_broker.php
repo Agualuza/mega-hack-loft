@@ -15,9 +15,9 @@ class CreateBroker extends Migration
     {
         Schema::create('broker', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('creci_state_id')->unsigned();
-            $table->integer('city_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('creci_state_id')->unsigned();
+            $table->bigInteger('city_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('creci',15);
             $table->foreign('creci_state_id')->references('id')->on('state');

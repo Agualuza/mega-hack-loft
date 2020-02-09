@@ -15,11 +15,11 @@ class CreateVertex extends Migration
     {
         Schema::create('vertex', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('area_id')->unsigned();
+            $table->bigInteger('area_id')->unsigned();
             $table->foreign('area_id')->references('id')->on('area');
             $table->string('lat',30);
             $table->string('lng',30);
-            $table->integer('order',3);
+            $table->mediumInteger('order');
             $table->timestamps();
         });
     }

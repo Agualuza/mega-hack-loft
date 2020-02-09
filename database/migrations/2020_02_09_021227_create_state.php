@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArea extends Migration
+class CreateState extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateArea extends Migration
      */
     public function up()
     {
-        Schema::create('area', function (Blueprint $table) {
+        Schema::create('state', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('broker_id')->unsigned();
-            $table->foreign('broker_id')->references('id')->on('broker');
+            $table->bigInteger('country_id')->unsigned();
             $table->string('name');
-            $table->string('status',1);
+            $table->string('abbreviation',2);
+            $table->foreign('country_id')->references('id')->on('country');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateArea extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('area');
+        Schema::dropIfExists('state');
     }
 }

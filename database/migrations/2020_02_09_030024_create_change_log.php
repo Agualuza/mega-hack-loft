@@ -15,7 +15,7 @@ class CreateChangeLog extends Migration
     {
         Schema::create('change_log', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('model_id')->nullable();
+            $table->bigInteger('model_id')->nullable();
             $table->string('model',30)->nullable();
             $table->mediumText('description')->nullable();
             $table->timestamps();
