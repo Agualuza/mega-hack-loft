@@ -1,0 +1,140 @@
+.style-card {
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+}
+
+.card-border-orange {
+    border: 1.5px solid #eb6033;
+}
+
+.card-flex-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-orange {
+    color: #eb6033;
+}
+
+.title-style {
+    margin-top: 0;
+    font-weight: bolder;
+}
+
+.alert-avaible {
+    height: 45px;
+    padding: 0;
+}
+
+.alert-avaible button {
+    height: 10px;
+    background-color: transparent;
+}
+
+.alert-avaible button p {
+    position: relative;
+    bottom: 10px;
+    font-weight: bolder;
+}
+
+.alert-avaible .item-style {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.alert-unavaible .item-style {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.red-btn {
+    color: #de5353;
+}
+
+.green-btn {
+    color: #28a745;
+}
+
+.alert-unavaible {
+    height: 45px;
+    padding: 0;
+}
+
+.text-disabled {
+    color: gray;
+    font-weight: bolder;
+}
+
+.btn-edit {
+    background-color: transparent;
+    color: #2ca8ff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn-edit:hover {
+    background-color: transparent;
+    color: #2ca8ff;
+}
+
+.column-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.btn-icon {
+    background-color: transparent;
+    border: none;
+}
+
+.map-style {
+    height: 500px;
+    margin: 15px;
+}
+
+.progress-bar-bronze {
+    background-color: #cd7f32;
+}
+
+.progress-bar-silver {
+    background-color: #C0C0C0;
+}
+
+.progress-bar-gold {
+    background-color: #ffd700;
+}
+
+.progress-bar-diamond {
+    background-color: #9ac5db;
+}
+
+.progress-bar-black {
+    background-color: #000000;
+}
+
+.title-bronze {
+    color: #cd7f32;
+}
+
+.title-silver {
+    color: #C0C0C0;
+}
+
+.title-gold {
+    color: #ffd700;
+}
+
+.title-diamond {
+    color: #9ac5db;
+}
+
+.title-black {
+    color: #000000;
+}
