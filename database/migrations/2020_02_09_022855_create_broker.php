@@ -22,7 +22,7 @@ class CreateBroker extends Migration
             $table->string('creci',15);
             $table->foreign('creci_state_id')->references('id')->on('state');
             $table->foreign('city_id')->references('id')->on('city');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('level',1);
             $table->timestamps();
         });
