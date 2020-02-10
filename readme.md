@@ -7,6 +7,12 @@
 * Create a database and user in MySQL 
 * Crete a `.env` file under `root` following `.env.example`;
 
+* Update composer
+
+    ```
+    $ composer update
+    ```
+
 * Generate a key
 
     ```
