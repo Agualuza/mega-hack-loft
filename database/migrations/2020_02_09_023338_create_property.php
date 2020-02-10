@@ -28,7 +28,7 @@ class CreateProperty extends Migration
             $table->string('type',1);
             $table->string('status',1);
             $table->mediumText('description')->nullable();
-            $table->decimal('amount', 5, 2)->nullable();
+            $table->decimal('amount', 10, 2)->nullable();
             $table->smallInteger('room')->nullable();
             $table->tinyInteger('pool')->nullable();
             $table->tinyInteger('garage')->nullable();
