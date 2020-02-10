@@ -16,10 +16,10 @@ class CreateCustomerEvaluation extends Migration
         Schema::create('customer_evaluation', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('call_id')->unsigned();
-            $table->bigInteger('customer_user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('broker_id')->unsigned();
             $table->foreign('call_id')->references('id')->on('call');
-            $table->foreign('customer_user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('broker_id')->references('id')->on('broker');
             $table->string('message')->nullable();
             $table->integer('score');
