@@ -12,6 +12,7 @@ class ProfileController extends Controller
     public function index(){
         $user = Auth::user();
         $broker = Broker::where('id',$user->id)->get()->first();
+
         $data = array(
             "broker" => $broker
         );
