@@ -7,10 +7,10 @@
             <div class="card-block">
                 <h6 class="m-b-20">Chamadas</h6>
                 <div class="card-flex-content">
-                <h2><i class="now-ui-icons business_briefcase-24"></i></h2><h2 class="text-right"><span>7</span></h2>
+                <h2><i class="now-ui-icons business_briefcase-24"></i></h2><h2 class="text-right"><span>{{$broker->getCallsQtd()}}</span></h2>
                 </div>
                 <div class="card-flex-content">
-                    <p class="m-b-0">Chamadas Realizadas</p> <p> <span class="f-right"><strong>3</strong></span></p> 
+                    <p class="m-b-0">Chamadas Realizadas</p> <p> <span class="f-right"><strong>{{$broker->getCallsQtdDone()}}</strong></span></p> 
                 </div>  
             </div>
         </div>
@@ -21,10 +21,10 @@
             <div class="card-block">
                 <h6 class="m-b-20">Total em Vendas</h6>
                 <div class="card-flex-content">
-                    <h2><i class="now-ui-icons business_money-coins"></i></h2><h3 class="text-right"><span>R$ 1.000.000</span></h3>
+                    <h2><i class="now-ui-icons business_money-coins"></i></h2><h3 class="text-right"><span>R$ {{$broker->getTotalBilling()}}</span></h3>
                 </div>
                 <div class="card-flex-content">
-                    <p class="m-b-0">Comissão</p> <p><span class="f-right"><strong>6.000</strong></span></p>   
+                    <p class="m-b-0">Comissão</p> <p><span class="f-right"><strong>R$ {{$broker->getTotalFee()}}</strong></span></p>   
                 </div>
             </div>
         </div>
@@ -35,10 +35,10 @@
             <div class="card-block">
                 <h6 class="m-b-20">Avaliação</h6>
                 <div class="card-flex-content">
-                    <h2><i class="now-ui-icons ui-2_favourite-28"></i></h2><h3 class="text-right"><span>4.78</span></h3>
+                    <h2><i class="now-ui-icons ui-2_favourite-28"></i></h2><h3 class="text-right"><span>{{$broker->getEvaluationScore()}}</span></h3>
                 </div>
                 <div class="card-flex-content">
-                    <p class="m-b-0">Avaliações</p> <p><span class="f-right"><strong>120</strong></span></p>   
+                    <p class="m-b-0">Avaliações</p> <p><span class="f-right"><strong>{{$broker->getQtdEvaluations()}}</strong></span></p>   
                 </div>
             </div>
         </div>
@@ -49,10 +49,10 @@
             <div class="card-block">
                 <h6 class="m-b-20">Nível</h6>
                 <div class="card-flex-content">
-                    <h2><i class="now-ui-icons sport_trophy"></i></h2><h3 class="text-right"><span style="color:gold">Gold</span></h3>
+                    <h2><i class="now-ui-icons sport_trophy"></i></h2><h3 class="text-right"><span style="color:gold">{{$broker->getLevel()}}</span></h3>
                 </div>
                 <div class="card-flex-content">
-                    <p class="m-b-0">Pontos</p> <p><span class="f-right"><strong>1310</strong></span></p>   
+                    <p class="m-b-0">Pontos</p> <p><span class="f-right"><strong>{{$broker->getScore()}}</strong></span></p>   
                 </div>
             </div>
         </div>

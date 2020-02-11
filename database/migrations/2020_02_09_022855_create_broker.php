@@ -20,7 +20,7 @@ class CreateBroker extends Migration
             $table->bigInteger('city_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('creci',15);
-            $table->foreign('creci_state_id')->references('id')->on('state');
+            $table->foreign('state_id')->references('id')->on('state');
             $table->foreign('city_id')->references('id')->on('city');
             $table->string('photo')->nullable();
             $table->mediumInteger('description')->nullable();
