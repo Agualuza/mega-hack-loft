@@ -13,39 +13,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Icaraí</td>
-      <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
-      <td>
-        <div align="left">
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
-        </div>
-    </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Centro</td>
-      <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
-      <td>
-        <div align="left">
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
-        </div>
-    </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>São Francisco</td>
-      <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
-      <td>
-        <div align="left">
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
-        </div>
-    </td>
-    </tr>
+    <?php 
+      $i = 1;
+    ?>
+    @foreach ($broker->field as $f) 
+      @if ($f->status == 'A')
+        <tr>
+          <th scope="row">{{$i}}</th>
+          <td>{{$f->name}}</td>
+          <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
+          <td>
+            <div align="left">
+                <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
+                <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
+            </div>
+        </td>
+        </tr>
+        <?php $i++;?>
+      @endif
+    @endforeach
   </tbody>
 </table>
 </div>
@@ -58,6 +44,9 @@
 
 @section('scripts')
 <script>
+        $(document).ready(() => {
+          showAreas();
+        });
         // Initialize and add the map
         function initMap() {
         // The location of Uluru
@@ -77,34 +66,32 @@
 
 
 
-        // showArea = () => {
-        //     var map_center = map.getCenter();
-        //     var lat = map.getCenter().lat();
-        //     var lng = map.getCenter().lng();;
-        //     var_x = 0.00355;
-        //     var_y = 0.0055;
+        showAreas = () => {
+            <?php foreach($broker->field as $f) { ?>
+              if('<?php echo $f->status?>' == 'A') {
+                var latlng = [];
+                <?php foreach($f->vertex as $v) {?>
+                latlng.push(new google.maps.LatLng({lat:<?php echo $v->lat?>,lng:<?php echo $v->lng?>}));
+                <?php } ?>
 
-        //     var latlng = [ 
-        //         new google.maps.LatLng({lat:lat,lng:lng}),
-        //         new google.maps.LatLng({lat:lat+var_x,lng:lng}),
-        //         new google.maps.LatLng({lat:lat+var_x,lng:lng+var_y}),
-        //         new google.maps.LatLng({lat:lat,lng:lng+var_y}) 
-        //     ];
+                var border = '<?php echo $f->border_color?>';
+                var fill = '<?php echo $f->fill_color?>';
 
-        //     var polygon = new google.maps.Polygon({
-        //         path: latlng,
-        //         map: map,
-        //         strokeColor: 'black',
-        //         fillColor: 'green',
-        //         opacity: 0.4,
-        //         draggable:true,
-        //         editable: true,
-        //         strokeWeight:0.2
-        //     });
-        //     polygon.setVisible(true);
-        //     polygon.setMap(map);        
-
-        // }
+                var polygon = new google.maps.Polygon({
+                    path: latlng,
+                    map: map,
+                    strokeColor: border,
+                    fillColor: fill,
+                    opacity: 0.4,
+                    draggable:false,
+                    editable: false,
+                    strokeWeight:0.2
+                });
+                polygon.setVisible(true);
+                polygon.setMap(map);  
+              }
+              <?php }?>      
+        }
 
 
     </script>

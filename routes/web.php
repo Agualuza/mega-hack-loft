@@ -26,3 +26,5 @@ Route::post('/profile/level')->middleware('auth');
 Route::get('/profile/level','ProfileController@level')->middleware('auth');
 Route::post('/field/create')->middleware('auth');
 Route::get('/field/create','FieldController@create')->middleware('auth');
+Route::get('/field/save','FieldController@save')->middleware('auth');
+Route::post('/field/save','FieldController@save')->middleware('auth');
