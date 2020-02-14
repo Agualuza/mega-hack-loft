@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+Perfil
+@endsection
+
 @section('content')
 <div class="profile-page">
     <div class="wrapper">

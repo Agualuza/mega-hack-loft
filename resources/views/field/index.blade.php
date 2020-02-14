@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+Área de atuação
+@endsection
+
 @section('content')
 <div class="row">
 <div id="map" class="col-10 map-style"></div>
@@ -93,9 +97,8 @@
               <?php }?>      
         }
 
-
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA&callback=initMap">
     </script>
-@endsection  
+@endsection 

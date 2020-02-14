@@ -76,7 +76,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="/dashboard">
                             <p>Home</p>
                             </a>
@@ -125,7 +125,7 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                             <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">
                                 <p>Comprar</p>
                                 </a>
@@ -169,7 +169,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
                             <p>Comprar</p>
                             </a>
@@ -245,6 +245,7 @@
             @endauth
 
         <main>
+            <h2 align="center" style="text-transform: uppercase" class="text-orange">@yield('title')</h2>
             @yield('content')
 
 

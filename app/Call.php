@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Call extends Model
 {
     protected $table = 'call';
+
+    public function callProperty()
+    {
+        return $this->hasMany('App\CallProperty');
+    }
+
+
 }

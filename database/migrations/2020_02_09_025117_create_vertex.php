@@ -17,8 +17,8 @@ class CreateVertex extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('field_id')->unsigned();
             $table->foreign('field_id')->references('id')->on('field');
-            $table->string('lat',30);
-            $table->string('lng',30);
+            $table->decimal('lat',13,10);
+            $table->decimal('lng',13,10);
             $table->mediumInteger('order');
             $table->timestamps();
         });

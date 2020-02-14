@@ -5,7 +5,6 @@
     <div id="map" class="col-10 map-style"></div>
         <button id="btn-add-area" style="margin-left:0" onclick="showArea()" class="card-border-orange text-orange"><b>Adicionar área</b></button>
     </div>
-
     <form id="form" action="/field/save" method="POST">
         @csrf
     </form>
@@ -70,8 +69,10 @@
         saveArea = () => {
             var p = polygon.latLngs.g[0].g;
             var index = 0;
+            var laln = null;
             p.forEach(v => {
                 var latlng = v.lat()+','+v.lng();
+                laln = latlng;
                 var html = "<input type='hidden' name='coord" +
                 index+"' value='"+latlng+"'>";
                 index++;
@@ -82,8 +83,27 @@
             var border = "<input type='hidden' name='border' value='"+polygon.strokeColor+"'>"
             $("#form").append(color);
             $("#form").append(border);
-            
+            getCityId(laln);
             $("#form").submit();
+        }
+
+        getCityId = (latlng) => {
+            var key = "AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA";
+            $.ajax({
+            method: "GET",
+            url: "https://maps.googleapis.com/maps/api/geocode/json",
+            data: { key: key, latlng: latlng }
+            })
+            .done(function( r ) {
+                r['results'].forEach(res => {
+                    if(res["address_components"][0]['types'].includes("administrative_area_level_2")){
+                        var val = res["address_components"][0]['long_name'];
+                        var city = "<input type='hidden' name='city_name' value='"+val+"'>"
+                         $("#form").append(city);
+                         $("#form").submit();
+                    }
+                });
+            });
         }
 
     </script>

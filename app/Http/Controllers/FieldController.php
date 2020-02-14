@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Field;
 use App\Broker;
+use App\GoogleApiService;
+use App\ApiService;
 use App\Vertex;
 
 class FieldController extends Controller
@@ -30,16 +32,20 @@ class FieldController extends Controller
             $field = new Field();
             $user = Auth::user();
             $broker = Broker::where('id',$user->id)->get()->first();
+            $service = new ApiService();
+            $c = $request->input('city_name');
+
+            $city_id = $service->getCityId($c);
 
             $field->broker_id = $broker->id;
-            $field->city_id = $broker->city_id;
+            $field->city_id = $city_id;
             $field->status = 'A';
             $field->name = 'Praia da Boa Viagem';
             $field->border_color = $request->input('border');
             $field->fill_color = $request->input('fill');
             $field->save();
             
-            $size = count($request->all())-3;
+            $size = count($request->all())-4;
             for ($i=0; $i < $size; $i++) { 
                 $param = 'coord'.$i;
                 $c = $request->input($param);

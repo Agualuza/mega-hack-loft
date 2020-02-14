@@ -19,8 +19,8 @@ class CreateProperty extends Migration
             $table->bigInteger('state_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->string('address');
-            $table->string('lat',30);
-            $table->string('lng',30);
+            $table->decimal('lat',13,10);
+            $table->decimal('lng',13,10);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('city_id')->references('id')->on('city');
             $table->foreign('state_id')->references('id')->on('state');
