@@ -4,8 +4,10 @@
 <div class="row" id="row-id">
     <div id="map" class="col-10 map-style"></div>
         <button id="btn-add-area" style="margin-left:0" onclick="showArea()" class="card-border-orange text-orange"><b>Adicionar área</b></button>
-</div>
-
+    </div>
+    <form id="form" action="/field/save" method="POST">
+        @csrf
+    </form>
 
 @endsection  
 
@@ -44,11 +46,14 @@
                 new google.maps.LatLng({lat:lat,lng:lng+var_y}) 
             ];
 
-            var polygon = new google.maps.Polygon({
+            var colors = ['#7FFFD4','#DAA520','#8A2BE2','#FF69B4','#FFD700','#FF7F50'];
+            var borders = ['#2F4F4F','#D2691E',"#4B0082",'#FF1493','#F0E68C','#FF0000'];
+            var color_index = Math.floor(Math.random() * colors.length);
+            polygon = new google.maps.Polygon({
                 path: latlng,
                 map: map,
-                strokeColor: 'black',
-                fillColor: 'green',
+                strokeColor: colors[color_index],
+                fillColor: borders[color_index],
                 opacity: 0.4,
                 draggable:true,
                 editable: true,
@@ -62,7 +67,43 @@
         }
 
         saveArea = () => {
-            alert("salvou");
+            var p = polygon.latLngs.g[0].g;
+            var index = 0;
+            var laln = null;
+            p.forEach(v => {
+                var latlng = v.lat()+','+v.lng();
+                laln = latlng;
+                var html = "<input type='hidden' name='coord" +
+                index+"' value='"+latlng+"'>";
+                index++;
+                $("#form").append(html);
+            });
+
+            var color = "<input type='hidden' name='fill' value='"+polygon.fillColor+"'>"
+            var border = "<input type='hidden' name='border' value='"+polygon.strokeColor+"'>"
+            $("#form").append(color);
+            $("#form").append(border);
+            getCityId(laln);
+            $("#form").submit();
+        }
+
+        getCityId = (latlng) => {
+            var key = "AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA";
+            $.ajax({
+            method: "GET",
+            url: "https://maps.googleapis.com/maps/api/geocode/json",
+            data: { key: key, latlng: latlng }
+            })
+            .done(function( r ) {
+                r['results'].forEach(res => {
+                    if(res["address_components"][0]['types'].includes("administrative_area_level_2")){
+                        var val = res["address_components"][0]['long_name'];
+                        var city = "<input type='hidden' name='city_name' value='"+val+"'>"
+                         $("#form").append(city);
+                         $("#form").submit();
+                    }
+                });
+            });
         }
 
     </script>

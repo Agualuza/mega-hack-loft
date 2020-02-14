@@ -62,6 +62,11 @@ class Broker extends Model
         return $this->hasOne('App\City');
     }
 
+    public function dispatch()
+    {
+        return $this->hasMany('App\Dispatch');
+    }
+
     public function getEvaluationScore(){
         $evaluations = BrokerEvaluation::where('broker_id',$this->id)->limit(100)->get();
         $total = 0;
@@ -98,9 +103,10 @@ class Broker extends Model
 
     public function getCallsQtd(){
         $m = date('m');
+        $y = date('Y');
         $qtdCalls = DB::table('call')
         ->select(DB::raw('count(*) as qtd'))
-        ->whereRaw('MONTH(created_at) = ? AND broker_id = ?',[$m,$this->id])
+        ->whereRaw('MONTH(created_at) = ? AND YEAR(created_at) = ? AND broker_id = ?',[$m,$y,$this->id])
         ->get();
 
         foreach ($qtdCalls as $qtd) {
@@ -113,9 +119,10 @@ class Broker extends Model
 
     public function getCallsQtdDone(){
         $m = date('m');
+        $y = date('Y');
         $qtdCalls = DB::table('call')
         ->select(DB::raw('count(*) as qtd'))
-        ->whereRaw('MONTH(created_at) = ? AND broker_id = ? and status = ?',[$m,$this->id,'C'])
+        ->whereRaw('MONTH(created_at) = ? AND YEAR(created_at) = ? AND broker_id = ? and status = ?',[$m,$y,$this->id,'C'])
         ->get();
 
         foreach ($qtdCalls as $qtd) {
@@ -130,11 +137,12 @@ class Broker extends Model
 
     public function getTotalBilling(){
         $m = date('m');
+        $y = date('Y');
         $billing = DB::table('property')
         ->select(DB::raw('sum(property.amount) as amount'))
         ->join('call_property','property.id','=','call_property.property_id')
         ->join('call','call.id','=','call_property.call_id')
-        ->whereRaw('MONTH(call.created_at) = ? AND call.broker_id = ? and property.status = ?',[$m,$this->id,'S'])
+        ->whereRaw('MONTH(call.created_at) = ? AND YEAR(call.created_at) = ? AND call.broker_id = ? and property.status = ?',[$m,$y,$this->id,'S'])
         ->get();
 
         foreach ($billing as $b) {

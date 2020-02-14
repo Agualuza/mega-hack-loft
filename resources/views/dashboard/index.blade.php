@@ -68,29 +68,17 @@
                     <div class="title-style"><h3 class="text-orange">Chamadas</h3></div>
             </div>    
             <div class="card-block">
+                @foreach ($broker->dispatch as $d)
                 <div class="alert alert-info row alert-avaible" role="alert">
-                    <p class="item-style"><b>Jorge</b></p>
-                    <p class="item-style"><b>Icaraí</b></p>
-                    <p class="item-style"><b>10/03/2020</b></p>
+                    <p class="item-style"><b>{{$d->call->id}}</b></p>
+                    <p class="item-style"><b>{{$d->call->callProperty[0]->property->neighborhood}}</b></p>
+                    <p class="item-style"><b>{{$d->getDate()}}</b></p>
                     <div style="display:flex;justify-content:space-around">
                         <button type="button" class="btn btn-neutral green-btn"><p>Aceitar<p></button>
                         <button type="button" class="btn btn-neutral red-btn"><p>Recusar<p></button>
                     </div>
                 </div>
-                <div class="alert alert-info row alert-avaible" role="alert">
-                    <p class="item-style"><b>Iago</b></p>
-                    <p class="item-style"><b>Icaraí</b></p>
-                    <p class="item-style"><b>10/03/2020</b></p>
-                    <div style="display:flex;justify-content:space-around">
-                        <button type="button" class="btn btn-neutral green-btn"><p>Aceitar<p></button>
-                        <button type="button" class="btn btn-neutral red-btn"><p>Recusar<p></button>
-                    </div>
-                </div>
-                <div class="alert alert-danger row alert-unavaible" role="alert">
-                    <p class="item-style"><b>Mauricio</b></p>
-                    <p class="item-style"><b>Icaraí</b></p>
-                    <p class="item-style"><b>10/03/2020</b></p>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
+@section('title')
+Conquistas
+@endsection
+
 @section('content')
 <div align="center">
-    <h2 class="text-orange">Nível</h2>
     <div class="col-8">
         <h3 class="title-bronze">Bronze <img src="../assets/img/party.png"></h3>
         <div class="progress">
