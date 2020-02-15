@@ -68,7 +68,7 @@
                 <div>
                 <nav class="navbar navbar-expand-lg bg-primary">
                     <div class="container">
-                    <a class="navbar-brand" href="#">Logo</a>
+                    <a class="navbar-brand" href="#"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
                         <span class="navbar-toggler-bar bar2"></span>
@@ -117,7 +117,7 @@
                     <div>
                     <nav class="navbar navbar-expand-lg bg-primary">
                         <div class="container">
-                        <a class="navbar-brand" href="#">Logo</a>
+                        <a class="navbar-brand" href="#"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar bar1"></span>
                             <span class="navbar-toggler-bar bar2"></span>
@@ -161,7 +161,7 @@
                 <div>
                 <nav class="navbar navbar-expand-lg bg-primary">
                     <div class="container">
-                    <a class="navbar-brand" href="#">Logo</a>
+                    <a class="navbar-brand" href="#"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
                         <span class="navbar-toggler-bar bar2"></span>
@@ -246,6 +246,7 @@
 
         <main>
             <h2 align="center" style="text-transform: uppercase" class="text-orange">@yield('title')</h2>
+            <div align="center" style="font-size:16px;"  id="page-alert"></div>
             @yield('content')
 
 
