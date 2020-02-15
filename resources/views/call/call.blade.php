@@ -8,11 +8,14 @@ Chamada {{$call->id}}
 <div align="center"> 
     <h6  style="text-transform: uppercase" class="text-orange">Seja bem vindo a chamada com {{$call->user->name}}</h6>
     <span style="width:100px;" class="badge <?php echo $call->getCallColor()?>">{{$call->getCallStatus()}}</span>
+    <a id="showChat" class="none" onclick="showChat()"><span style="width:100px;" class="badge badge-warning">Mostrar Chat</span></a>
+    <a id="showMap" onclick="showMap()"><span style="width:100px;" class="badge badge-warning">Mostrar Mapa</span></a>
 </div>
 @endsection  
 
 @section('chat')
-<div class="col-lg-6 chat">
+<div id="map" class="col-6 map-style none"></div>
+<div id="chat-div" class="col-lg-6 chat">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title box-title">Chat com {{$call->getUserName()}}</h4>
@@ -180,6 +183,54 @@ Chamada {{$call->id}}
     
 
 
+    function initMap() {
+        center = {lat: <?php echo $call->callProperty[0]->property->lat?>, lng: <?php echo $call->callProperty[0]->property->lng?>};
+        
+        map = new google.maps.Map(
+            document.getElementById('map'), {
+                zoom: 17,
+                center: center,
+                fullscreenControl:false,
+                mapTypeControl:false,
+                streetViewControl:false,
+            });
+
+            var icon = {
+            url: "../assets/img/apartment.png", // url
+            scaledSize: new google.maps.Size(32, 32), // scaled size
+        };
+
+        marker = new google.maps.Marker({
+            position: center,
+            title:"<?php  $call->callProperty[0]->property->address?>",
+            icon: icon
+        });    
+
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+            var pixelSizeAtZoom0 = 32; //the size of the icon at zoom level 0
+            var maxPixelSize = 32; //restricts the maximum size of the icon, otherwise the browser will choke at higher zoom levels trying to scale an image to millions of pixels
+
+            var zoom = map.getZoom();
+            var relativePixelSize = Math.round(pixelSizeAtZoom0*Math.pow(2,zoom)); // use 2 to the power of current zoom to calculate relative pixel size.  Base of exponent is 2 because relative size should double every time you zoom in
+
+            if(relativePixelSize > maxPixelSize) //restrict the maximum size of the icon
+                relativePixelSize = maxPixelSize;
+
+            //change the size of the icon
+            marker.setIcon(
+                new google.maps.MarkerImage(
+                    marker.getIcon().url, //marker's same icon graphic
+                    null,//size
+                    null,//origin
+                    null, //anchor
+                    new google.maps.Size(relativePixelSize, relativePixelSize) //changes the scale
+                )
+            );        
+        });
+
+        marker.setMap(map);        
+    }
+
     connectSendBird = (send_msg = false) => {
         sb.connect("<?php echo $user->id?>","<?php echo $call->access_token?>", function(user, error) {
         const params = new sb.UserMessageParams();
@@ -248,25 +299,25 @@ Chamada {{$call->id}}
             var html_msg = null;
             var profile_url = "https://image.flaticon.com/icons/svg/1500/1500374.svg";
 
-            if(message._sender){
-                uid = message._sender.userId;
-                profile_url = message._sender.profileUrl;
+            if(channel.url.localeCompare("<?php echo $call->channel_url ?>") == 0) {
+                if(message._sender){
+                    uid = message._sender.userId;
+                    profile_url = message._sender.profileUrl;
+                }
+
+                if(uid == "<?php echo $call->user->id?>"){
+                    var html_msg = getReceivedHTMLMessages("<?php echo $call->getUserName()?>",msg,profile_url,timeConverter(message.createdAt));    
+                }
+
+                if(uid == -1) {
+                    var html_msg = getReceivedHTMLMessages("Administrador",msg,profile_url,timeConverter(message.createdAt)); 
+                }
+
+                if(html_msg){
+                    $("#empty-chat").remove();
+                    $("#messenger-box").append(html_msg);
+                }
             }
-
-            if(uid == "<?php echo $call->user->id?>"){
-                var html_msg = getReceivedHTMLMessages("<?php echo $call->getUserName()?>",msg,profile_url,timeConverter(message.createdAt));    
-            }
-
-            if(uid == -1) {
-                var html_msg = getReceivedHTMLMessages("Administrador",msg,profile_url,timeConverter(message.createdAt)); 
-            }
-
-            if(html_msg){
-                $("#empty-chat").remove();
-                $("#messenger-box").append(html_msg);
-            }
-
-
         };
         <?php $hash = substr(md5(rand(0,9999).rand(0,99999).rand(0,99999)),0,10)?>
         var handler_id = "Call_"+"<?php echo $call->id?>"+"_"+"<?php echo $hash?>";
@@ -364,5 +415,22 @@ Chamada {{$call->id}}
             return time;
         }
 
+        showMap = () => {
+            $("#showChat").show();
+            $("#showMap").hide();
+            $("#chat-div").hide();
+            $("#map").show();
+        }
+
+        showChat = () => {
+            $("#showMap").show();
+            $("#showChat").hide();
+            $("#map").hide();
+            $("#chat-div").show();
+        }
+
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA&callback=initMap">
 </script>
 @endsection 
