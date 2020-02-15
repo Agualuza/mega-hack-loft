@@ -40,4 +40,10 @@ class Call extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function getUserName()
+    {
+        $arrayName = explode(' ',$this->user->name);
+        return $arrayName[0];
+    }
+
 }

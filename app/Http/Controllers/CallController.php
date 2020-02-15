@@ -58,6 +58,19 @@ class CallController extends Controller
        
     }
 
+    public function sendbird(){
+        $user = Auth::user();
+        $user->has_sendbird = 1;
+        $user->save();
+    }
+
+    public function createChannel(Request $request){
+        $call = Call::where('id',$request->input('call_id'))->get()->first();
+        $call->channel_url = $request->input('channel_url');
+        $call->access_code = $request->input('access_code');
+        $call->save();
+    }
+
     public function acept(Request $request) {
         if($request->input("broker_id") && $request->input("call_id") ){
             $bid = $request->input("broker_id");
@@ -89,7 +102,8 @@ class CallController extends Controller
         
         $data = array(
             "broker" => $broker,
-            "call" => $call
+            "call" => $call,
+            "user" => $user
         );
         
         return view("call.call",$data);

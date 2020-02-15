@@ -35,6 +35,7 @@
   <link href="../assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="../assets/css/chat.css" rel="stylesheet" />
   <link href="../assets/css/style.css" rel="stylesheet" />
  
    <!--   Core JS Files   -->
@@ -51,7 +52,8 @@
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA"></script> -->
   <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
-
+  <!-- SendBird Chat -->
+  <script src="../assets/sendbird/SendBird.min.js"></script>
  <!-- Scripts -->
  <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -248,11 +250,11 @@
             <h2 align="center" style="text-transform: uppercase" class="text-orange">@yield('title')</h2>
             <div align="center" style="font-size:16px;"  id="page-alert"></div>
             @yield('content')
-
+            <div align="center">@yield('chat')</div>
 
             <footer style="margin-top:30px;" class="footer">
             <div class=" container ">
-                <div align="right" style="font-size:12px;">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                <div align="right" style="font-size:12px;">Icons made by <a target="_blank" href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a target="_blank" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                 <div class="copyright" id="copyright">
                 &copy;
                 <script>

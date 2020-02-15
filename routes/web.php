@@ -38,3 +38,5 @@ Route::get('/call','CallController@index')->middleware('auth');
 Route::post('/call','CallController@index')->middleware('auth');
 Route::get('/call/call','CallController@call')->middleware('auth');
 Route::post('/call/call','CallController@call')->middleware('auth');
+Route::post('/user/sendbird','CallController@sendbird')->middleware('auth');
+Route::post('/user/createChannel','CallController@createChannel')->middleware('auth');
