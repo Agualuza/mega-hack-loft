@@ -2,6 +2,40 @@
     padding: 20px;
 }
 
+.none {
+    display: none;
+}
+
+#showChat {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#showMap {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#showChat:hover,
+#showChat:link,
+#showChat:active,
+#showChat:visited {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#showMap:hover,
+#showMap:link,
+#showMap:active,
+#showMap:visited {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 .row {
     display: flex;
     justify-content: space-around;

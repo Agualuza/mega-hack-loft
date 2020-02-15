@@ -23,6 +23,13 @@ class HomeController extends Controller
 
     public function index()
     {   
+        if(Auth::user()){
+            $user = Auth::user();
+            $type = $user->type;
+            if($type == "B"){
+                return redirect("/dashboard");
+            }
+        }
         return view('home.index');
     }
 
