@@ -17,6 +17,8 @@ class CreateCall extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('broker_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned();
+            $table->string("channel_url",255)->nullable();
+            $table->string("access_code",255)->nullable();
             $table->foreign('broker_id')->references('id')->on('broker');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('status',1);
