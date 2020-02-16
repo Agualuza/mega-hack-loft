@@ -26,6 +26,19 @@ class Broker extends Model
         "D" => 5.5/100,
         "P" => 6.5/100
     );
+    protected $arrayColor = array(
+        "B" => "#cd7f32",
+        "S" => "#C0C0C0",
+        "G" => "#ffd700",
+        "D" => "#9ac5db",
+        "P" => "#000000"
+    );
+
+    private $bronze = 0;
+    private $silver = 2200;
+    private $gold = 4700;
+    private $diamond = 8100;
+    private $black = 12200;
 
     public function call()
     {
@@ -82,12 +95,11 @@ class Broker extends Model
 
     public function getQtdEvaluations(){
         $count = BrokerEvaluation::where('broker_id',$this->id)->count();
-       
         return $count;
     }
 
     public function getScore(){
-        $score = Score::where('broker_id',$this->id)->get();
+        $score = $this->score;
         $total = 0;
 
         foreach ($score as $s) {
@@ -99,6 +111,54 @@ class Broker extends Model
 
     public function getLevel(){
         return $this->arrayLevels[$this->level];
+    }
+
+    public function getNODBTriggerColorLevel() {
+        $key = "B";
+        if($this->total_score){
+            if($this->total_score >= 12200){
+                $key = 'P';
+            } else if($this->total_score >= 8100){
+                $key = 'D';
+            } else if($this->total_score >= 4700){
+                $key = 'G';
+            } else if($this->total_score >= 2200){
+                $key = 'S';
+            } 
+        }
+        return $this->arrayColor[$key];
+    }
+
+    public function getNoDBTriggerLevelChar(){
+        $key = "B";
+        if($this->total_score){
+            if($this->total_score >= 12200){
+                $key = 'P';
+            } else if($this->total_score >= 8100){
+                $key = 'D';
+            } else if($this->total_score >= 4700){
+                $key = 'G';
+            } else if($this->total_score >= 2200){
+                $key = 'S';
+            } 
+        }
+        return $key;
+    }
+
+    public function getNoDBTriggerLevel(){
+        $key = "B";
+        if($this->total_score){
+            if($this->total_score >= 12200){
+                $key = 'P';
+            } else if($this->total_score >= 8100){
+                $key = 'D';
+            } else if($this->total_score >= 4700){
+                $key = 'G';
+            } else if($this->total_score >= 2200){
+                $key = 'S';
+            } 
+        }
+        return $this->arrayLevels[$key];
     }
 
     public function getCallsQtd(){
@@ -115,6 +175,49 @@ class Broker extends Model
             }
             return $qtd->qtd;
         }
+    }
+
+    //0 >= Bronze < 2200 sum 2200
+    //2200 >= Prata < 4700 sum 2500 
+    //4700 >= Ouro < 8100 sum 3400
+    //8100 >= Diamond < 12200 sum 4100
+    //12200 >= Black
+
+    public function getEachLevelScore(){
+        $totalScore = $this->total_score;
+        $bronze = 100;
+        $silver = 0;
+        $gold = 0;
+        $diamond = 0;
+        $black = 0;
+        
+        if($totalScore >= $this->black){
+            $silver = 100;
+            $gold = 100;
+            $diamond = 100;
+            $black = 100;
+        } else if($totalScore >= $this->diamond) {
+            $silver = 100;
+            $gold = 100;
+            $diamond = 100;
+            $black = ($totalScore - $this->diamond)/$this->black;
+            $black = $black * 100;
+        } else if($totalScore >= $this->gold) {
+            $silver = 100;
+            $gold = 100;
+            $diamond = ($totalScore - $this->gold)/$this->diamond;
+            $diamond = $diamond * 100;
+        } else if($totalScore >= $this->silver) {
+            $silver = 100;
+            $gold = ($totalScore - $this->silver)/$this->gold;
+            $gold = $gold * 100;
+        } else if($totalScore >= $this->bronze) {
+            $silver = ($totalScore)/$this->silver;
+            $silver = $silver * 100;
+        } 
+
+        return array("B" => $bronze, "S" => $silver, "G" => $gold, "D" => $diamond, "P" => $black);
+
     }
 
     public function getCallsQtdDone(){
@@ -155,7 +258,7 @@ class Broker extends Model
     }
 
     public function getTotalFee(){
-        return money_format('%.2n',$this->getTotalBilling() * $this->arrayFee[$this->level]);
+        return money_format('%.2n',$this->getTotalBilling() * $this->arrayFee[$this->getNoDBTriggerLevelChar()]);
     }
     
 
