@@ -49,7 +49,7 @@
             <div class="card-block">
                 <h6 class="m-b-20">Nível</h6>
                 <div class="card-flex-content">
-                    <h2><i class="now-ui-icons sport_trophy"></i></h2><h3 class="text-right"><span style="color:gold">{{$broker->getLevel()}}</span></h3>
+                    <h2><i class="now-ui-icons sport_trophy"></i></h2><h3 class="text-right"><span style="color:<?php echo $broker->getNODBTriggerColorLevel()?>">{{$broker->getNoDBTriggerLevel()}}</span></h3>
                 </div>
                 <div class="card-flex-content">
                     <p class="m-b-0">Pontos</p> <p><span class="f-right"><strong>{{$broker->getScore()}}</strong></span></p>   

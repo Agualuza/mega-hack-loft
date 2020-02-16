@@ -24,7 +24,7 @@ Perfil
             </div>
             <div class="social-description">
                 <div style="display: flex;justify-content:space-around;">
-                    <h2 class="text-right"><span style="color:gold">{{$broker->getLevel()}}</span></h2>
+                    <h2 class="text-right"><span style="color:<?php echo $broker->getNODBTriggerColorLevel()?>">{{$broker->getNoDBTriggerLevel()}}</span></h2>
                 </div>
                 <i class="now-ui-icons sport_trophy"></i>
             </div>
