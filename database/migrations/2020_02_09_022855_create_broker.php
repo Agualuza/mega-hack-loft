@@ -24,7 +24,8 @@ class CreateBroker extends Migration
             $table->foreign('city_id')->references('id')->on('city');
             $table->string('photo')->nullable();
             $table->mediumInteger('description')->nullable();
-            $table->string('level',1);
+            $table->string('level',1)->nullable();
+            $table->integer('total_score')->nullable();
             $table->string('status',1);
             $table->bigInteger('last_status_user')->unsigned()->nullable();
             $table->foreign('last_status_user')->references('id')->on('users');

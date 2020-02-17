@@ -23,7 +23,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/home.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>{{ config('app.name', 'Laravel') }}</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -35,6 +35,7 @@
   <link href="../assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="../assets/css/chat.css" rel="stylesheet" />
   <link href="../assets/css/style.css" rel="stylesheet" />
  
    <!--   Core JS Files   -->
@@ -51,7 +52,8 @@
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA"></script> -->
   <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
-
+  <!-- SendBird Chat -->
+  <script src="../assets/sendbird/SendBird.min.js"></script>
  <!-- Scripts -->
  <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -68,7 +70,7 @@
                 <div>
                 <nav class="navbar navbar-expand-lg bg-primary">
                     <div class="container">
-                    <a class="navbar-brand" href="#">Logo</a>
+                    <a class="navbar-brand" href="/"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
                         <span class="navbar-toggler-bar bar2"></span>
@@ -76,7 +78,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="/dashboard">
                             <p>Home</p>
                             </a>
@@ -117,7 +119,7 @@
                     <div>
                     <nav class="navbar navbar-expand-lg bg-primary">
                         <div class="container">
-                        <a class="navbar-brand" href="#">Logo</a>
+                        <a class="navbar-brand" href="/"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar bar1"></span>
                             <span class="navbar-toggler-bar bar2"></span>
@@ -125,7 +127,7 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                             <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">
                                 <p>Comprar</p>
                                 </a>
@@ -161,7 +163,7 @@
                 <div>
                 <nav class="navbar navbar-expand-lg bg-primary">
                     <div class="container">
-                    <a class="navbar-brand" href="#">Logo</a>
+                    <a class="navbar-brand" href="/"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
                         <span class="navbar-toggler-bar bar2"></span>
@@ -169,24 +171,19 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/buy">
                             <p>Comprar</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/sell">
                             <p>Vender</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/call">
                             <p>Chamados</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                            <p>Perfil</p>
                             </a>
                         </li>
                         <form class="form-inline ml-auto" action="logout" method="post" data-background-color>
@@ -204,7 +201,7 @@
                 @endif
             @else
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+            <nav style="top:0" class="navbar navbar-expand-lg bg-primary fixed-top " color-on-scroll="400">
                  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar bar1"></span>
                     <span class="navbar-toggler-bar bar2"></span>
@@ -245,12 +242,14 @@
             @endauth
 
         <main>
+            <h2 align="center" style="text-transform: uppercase" class="text-orange">@yield('title')</h2>
+            <div align="center" style="font-size:16px;"  id="page-alert"></div>
             @yield('content')
-
+            <div align="center">@yield('chat')</div>
 
             <footer style="margin-top:30px;" class="footer">
             <div class=" container ">
-                <div align="right" style="font-size:12px;">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                <div align="right" style="font-size:12px;">Icons made by <a target="_blank" href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a target="_blank" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                 <div class="copyright" id="copyright">
                 &copy;
                 <script>

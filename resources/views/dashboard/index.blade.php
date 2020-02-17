@@ -49,7 +49,7 @@
             <div class="card-block">
                 <h6 class="m-b-20">Nível</h6>
                 <div class="card-flex-content">
-                    <h2><i class="now-ui-icons sport_trophy"></i></h2><h3 class="text-right"><span style="color:gold">{{$broker->getLevel()}}</span></h3>
+                    <h2><i class="now-ui-icons sport_trophy"></i></h2><h3 class="text-right"><span style="color:<?php echo $broker->getNODBTriggerColorLevel()?>">{{$broker->getNoDBTriggerLevel()}}</span></h3>
                 </div>
                 <div class="card-flex-content">
                     <p class="m-b-0">Pontos</p> <p><span class="f-right"><strong>{{$broker->getScore()}}</strong></span></p>   
@@ -67,33 +67,88 @@
             <div>    
                     <div class="title-style"><h3 class="text-orange">Chamadas</h3></div>
             </div>    
-            <div class="card-block">
-                <div class="alert alert-info row alert-avaible" role="alert">
-                    <p class="item-style"><b>Jorge</b></p>
-                    <p class="item-style"><b>Icaraí</b></p>
-                    <p class="item-style"><b>10/03/2020</b></p>
+            <div id="call-card" class="card-block">
+                @foreach ($broker->dispatch as $d)
+                @if ($d->call->status == "W")
+                <div id="call_id_{{$d->call->id}}" class="alert alert-info row alert-avaible" role="alert">
+                    <p class="item-style"><b>{{$d->call->id}}</b></p>
+                    <p class="item-style"><b>{{$d->call->callProperty[0]->property->neighborhood}}</b></p>
+                    <p class="item-style"><b>{{$d->getDate()}}</b></p>
                     <div style="display:flex;justify-content:space-around">
-                        <button type="button" class="btn btn-neutral green-btn"><p>Aceitar<p></button>
-                        <button type="button" class="btn btn-neutral red-btn"><p>Recusar<p></button>
+                        <button type="button" onclick="tryGetCall(<?php echo $d->call->id?>)" class="btn btn-neutral green-btn"><p>Aceitar<p></button>
+                        <!-- <button type="button" class="btn btn-neutral red-btn"><p>Recusar<p></button> -->
                     </div>
                 </div>
-                <div class="alert alert-info row alert-avaible" role="alert">
-                    <p class="item-style"><b>Iago</b></p>
-                    <p class="item-style"><b>Icaraí</b></p>
-                    <p class="item-style"><b>10/03/2020</b></p>
-                    <div style="display:flex;justify-content:space-around">
-                        <button type="button" class="btn btn-neutral green-btn"><p>Aceitar<p></button>
-                        <button type="button" class="btn btn-neutral red-btn"><p>Recusar<p></button>
-                    </div>
-                </div>
-                <div class="alert alert-danger row alert-unavaible" role="alert">
-                    <p class="item-style"><b>Mauricio</b></p>
-                    <p class="item-style"><b>Icaraí</b></p>
-                    <p class="item-style"><b>10/03/2020</b></p>
-                </div>
+                @endif
+                @endforeach
             </div>
         </div>
     </div>
 </div>
 
 @endsection  
+
+
+@section('scripts')
+<script>
+    const loadCalls = () => {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+
+        $.ajax({
+          url : "<?php echo url('/call/refresh')?>",
+          type : 'post',
+          data : {
+               broker_id : "<?php echo $broker->id?>"
+          }
+        })
+        .done(function(data){
+            var card = $("#call-card");
+            card.find(':first-child').remove();
+            data.dispatch.forEach(d => {
+                var html = '<div id="call_id_'+d.dispatch.call_id+'" class="alert alert-info row alert-avaible" role="alert">'+
+                    '<p class="item-style"><b>'+d.dispatch.call_id+'</b></p>'+
+                    '<p class="item-style"><b>'+d.neighborhood+'</b></p>'+
+                    '<p class="item-style"><b>'+d.date+'</b></p>'+
+                    '<div style="display:flex;justify-content:space-around">'+
+                    '<button type="button" onclick="tryGetCall('+d.dispatch.call_id+')" class="btn btn-neutral green-btn"><p>Aceitar<p></button>'+
+                    '</div>'+
+                    '</div>';
+                    card.append(html);
+            });
+        });
+    }
+    setInterval(loadCalls, 30000); //30000 miliseconds -> 30 seconds
+
+     tryGetCall = (call_id) => {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+
+        $.ajax({
+          url : "<?php echo url('/call/acept')?>",
+          type : 'post',
+          data : {
+               broker_id : "<?php echo $broker->id?>",
+               call_id : call_id
+          }
+        })
+        .done(function(data){
+            var color = data.status == 'OK' ? 'alert-success' : 'alert-danger';
+            var fontcolor = data.status == 'OK' ? '#1d8b39' : '#C52D2B';
+            $('#page-alert').addClass(color);
+            var html = '<p style="color:'+fontcolor+'" class="alert"><b>'+data.message+'</b></p>';
+            $('#page-alert').find(':first-child').remove();
+            $('#page-alert').append(html);
+            if(data.call_id && data.status == "OK"){
+                $('#call_id_'+data.call_id).remove();
+            }
+            });
+    }
+</script>
+@endsection

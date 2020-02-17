@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+Perfil
+@endsection
+
 @section('content')
 <div class="profile-page">
     <div class="wrapper">
@@ -11,7 +15,7 @@
             <form>
                 <button type="submit" class="btn btn-edit">Editar Perfil</button>
             </form>   
-            <h3 class="title" style="margin-top:0">Iago Agualuza</h3>
+            <h3 class="title" style="margin-top:0">{{$user->name}}</h3>
             <p class="category">{{$broker->creci}} CRECI{{$broker->state->abbreviation}}</p>
             <div class="content">
             <div class="social-description">
@@ -20,7 +24,7 @@
             </div>
             <div class="social-description">
                 <div style="display: flex;justify-content:space-around;">
-                    <h2 class="text-right"><span style="color:gold">{{$broker->getLevel()}}</span></h2>
+                    <h2 class="text-right"><span style="color:<?php echo $broker->getNODBTriggerColorLevel()?>">{{$broker->getNoDBTriggerLevel()}}</span></h2>
                 </div>
                 <i class="now-ui-icons sport_trophy"></i>
             </div>

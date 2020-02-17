@@ -21,6 +21,23 @@ class ProfileController extends Controller
     }
 
     public function level(){
-        return view("profile.level");
+        $user = Auth::user();
+        $broker = Broker::where('id',$user->id)->get()->first();
+
+        $data = array(
+            "broker" => $broker
+        );
+
+        return view("profile.level",$data);
+    }
+
+    public function user(){
+        $user = Auth::user();
+
+        $data = array(
+            'user' => $user
+        );
+
+        return view("profile.user",$data);
     }
 }

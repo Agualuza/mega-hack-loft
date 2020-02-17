@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+Área de atuação
+@endsection
+
 @section('content')
 <div class="row">
 <div id="map" class="col-10 map-style"></div>
@@ -13,39 +17,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Icaraí</td>
-      <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
-      <td>
-        <div align="left">
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
-        </div>
-    </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Centro</td>
-      <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
-      <td>
-        <div align="left">
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
-        </div>
-    </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>São Francisco</td>
-      <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
-      <td>
-        <div align="left">
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
-            <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
-        </div>
-    </td>
-    </tr>
+    <?php 
+      $i = 1;
+    ?>
+    @foreach ($broker->field as $f) 
+      @if ($f->status == 'A')
+        <tr>
+          <th scope="row">{{$i}}</th>
+          <td>{{$f->name}}</td>
+          <td><input class="form-check-input" type="checkbox" name="active" id="active"> Ativo</td>
+          <td>
+            <div align="left">
+                <button type="submit" class="btn-icon"><i class="now-ui-icons ui-1_settings-gear-63"></i></button>
+                <button type="submit" onclick="deleteField(<?php echo $f->id?>)" class="btn-icon"><i class="now-ui-icons ui-1_simple-remove"></i></button>
+            </div>
+        </td>
+        </tr>
+        <?php $i++;?>
+      @endif
+    @endforeach
   </tbody>
 </table>
 </div>
@@ -60,55 +50,80 @@
 <script>
         // Initialize and add the map
         function initMap() {
-        // The location of Uluru
-        var center = {lat: -22.906428, lng: -43.133264};
-        // The map, centered at Uluru
-        map = new google.maps.Map(
+
+        var key = "AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA";
+        var add = '<?php echo $broker->city->name?>';
+        center = {lat: -22.906428, lng: -43.133264};
+        $.ajax({
+        method: "GET",
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        data: { key: key, address: add }
+        })
+        .done(function( r ) {
+            r['results'].forEach(res => {
+                if(res.geometry.location.lat && res.geometry.location.lng){
+                    center = {lat: res.geometry.location.lat, lng: res.geometry.location.lng};
+                }
+            });
+            map = new google.maps.Map(
             document.getElementById('map'), {
                 zoom: 17,
                 center: center,
                 fullscreenControl:false,
                 mapTypeControl:false,
-                streetViewControl:false
+                streetViewControl:false,
             });
-        // The marker, positioned at Uluru
-        // var marker = new google.maps.Marker({position: center, map: map});
+            showAreas();
+        });
         }
 
+        deleteField = (fid) => {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });
 
+          $.ajax({
+            url : "<?php echo url('/field/delete')?>",
+            type : 'post',
+            data : {
+                field_id : fid
+            }
+          }).done(function( r ) {
+              location.reload();
+          });
+        }
 
-        // showArea = () => {
-        //     var map_center = map.getCenter();
-        //     var lat = map.getCenter().lat();
-        //     var lng = map.getCenter().lng();;
-        //     var_x = 0.00355;
-        //     var_y = 0.0055;
+        showAreas = () => {
+            <?php foreach($broker->field as $f) { ?>
+              if('<?php echo $f->status?>' == 'A') {
+                var latlng = [];
+                <?php foreach($f->vertex as $v) {?>
+                latlng.push(new google.maps.LatLng({lat:<?php echo $v->lat?>,lng:<?php echo $v->lng?>}));
+                <?php } ?>
 
-        //     var latlng = [ 
-        //         new google.maps.LatLng({lat:lat,lng:lng}),
-        //         new google.maps.LatLng({lat:lat+var_x,lng:lng}),
-        //         new google.maps.LatLng({lat:lat+var_x,lng:lng+var_y}),
-        //         new google.maps.LatLng({lat:lat,lng:lng+var_y}) 
-        //     ];
-
-        //     var polygon = new google.maps.Polygon({
-        //         path: latlng,
-        //         map: map,
-        //         strokeColor: 'black',
-        //         fillColor: 'green',
-        //         opacity: 0.4,
-        //         draggable:true,
-        //         editable: true,
-        //         strokeWeight:0.2
-        //     });
-        //     polygon.setVisible(true);
-        //     polygon.setMap(map);        
-
-        // }
-
+                var border = '<?php echo $f->border_color?>';
+                var fill = '<?php echo $f->fill_color?>';
+                
+                var polygon = new google.maps.Polygon({
+                    path: latlng,
+                    map: map,
+                    strokeColor: border,
+                    fillColor: fill,
+                    opacity: 0.4,
+                    draggable:false,
+                    editable: false,
+                    strokeWeight:0.2
+                });
+                polygon.setVisible(true);
+                polygon.setMap(map);  
+              }
+              <?php }?>      
+        }
 
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA&callback=initMap">
     </script>
-@endsection  
+@endsection 

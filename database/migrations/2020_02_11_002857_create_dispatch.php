@@ -17,6 +17,7 @@ class CreateDispatch extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('broker_id')->unsigned();
             $table->bigInteger('call_id')->unsigned();
+            $table->integer('dispatch_time')->nullable();
             $table->foreign('broker_id')->references('id')->on('broker');
             $table->foreign('call_id')->references('id')->on('call');
             $table->timestamps();

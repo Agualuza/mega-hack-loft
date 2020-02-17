@@ -2,6 +2,40 @@
     padding: 20px;
 }
 
+.none {
+    display: none;
+}
+
+#showChat {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#showMap {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#showChat:hover,
+#showChat:link,
+#showChat:active,
+#showChat:visited {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#showMap:hover,
+#showMap:link,
+#showMap:active,
+#showMap:visited {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 .row {
     display: flex;
     justify-content: space-around;
@@ -137,4 +171,18 @@
 
 .title-black {
     color: #000000;
+}
+
+.my-jumbotron {
+    background-color: transparent;
+    border: 1px solid #f96332;
+}
+
+.text-orange {
+    color: #f96332;
+}
+
+.lb {
+    margin-top: 10px;
+    margin-bottom: 2px;
 }

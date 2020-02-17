@@ -16,16 +16,14 @@ class CreateProperty extends Migration
         Schema::create('property', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('city_id')->unsigned();
-            $table->bigInteger('state_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->string('address');
-            $table->string('lat',30);
-            $table->string('lng',30);
+            $table->string('address')->nullable();
+            $table->decimal('lat',13,10)->nullable();
+            $table->decimal('lng',13,10)->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('city_id')->references('id')->on('city');
-            $table->foreign('state_id')->references('id')->on('state');
-            $table->string('neighborhood',50);
-            $table->string('type',1);
+            $table->string('neighborhood',50)->nullable();
+            $table->string('type',1)->nullable();
             $table->string('status',1);
             $table->mediumText('description')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
