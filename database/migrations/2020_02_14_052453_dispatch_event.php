@@ -22,7 +22,7 @@ class DispatchEvent extends Migration
         DO
         SELECT dispatch();
         ";
-        DB::statement($query);
+        DB::unprepared($query);
     }
 
     /**
