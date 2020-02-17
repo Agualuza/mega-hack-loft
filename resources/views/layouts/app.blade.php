@@ -70,7 +70,7 @@
                 <div>
                 <nav class="navbar navbar-expand-lg bg-primary">
                     <div class="container">
-                    <a class="navbar-brand" href="#"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
+                    <a class="navbar-brand" href="/"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
                         <span class="navbar-toggler-bar bar2"></span>
@@ -119,7 +119,7 @@
                     <div>
                     <nav class="navbar navbar-expand-lg bg-primary">
                         <div class="container">
-                        <a class="navbar-brand" href="#"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
+                        <a class="navbar-brand" href="/"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar bar1"></span>
                             <span class="navbar-toggler-bar bar2"></span>
@@ -163,7 +163,7 @@
                 <div>
                 <nav class="navbar navbar-expand-lg bg-primary">
                     <div class="container">
-                    <a class="navbar-brand" href="#"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
+                    <a class="navbar-brand" href="/"><img style="width:70px;" src="../assets/img/inov4re_png.png"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
                         <span class="navbar-toggler-bar bar2"></span>
@@ -172,23 +172,18 @@
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/buy">
                             <p>Comprar</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/sell">
                             <p>Vender</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/call">
                             <p>Chamados</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                            <p>Perfil</p>
                             </a>
                         </li>
                         <form class="form-inline ml-auto" action="logout" method="post" data-background-color>
@@ -206,7 +201,7 @@
                 @endif
             @else
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+            <nav style="top:0" class="navbar navbar-expand-lg bg-primary fixed-top " color-on-scroll="400">
                  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar bar1"></span>
                     <span class="navbar-toggler-bar bar2"></span>

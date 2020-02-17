@@ -121,7 +121,7 @@
             });
         });
     }
-    setInterval(loadCalls, 60000); //60000 miliseconds -> 60 seconds
+    setInterval(loadCalls, 30000); //30000 miliseconds -> 30 seconds
 
      tryGetCall = (call_id) => {
         $.ajaxSetup({

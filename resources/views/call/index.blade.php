@@ -24,7 +24,9 @@ Chamadas
                 <form action="/call/call" method="POST">
                     @csrf
                     <input type="hidden" name="call_id" value="<?php echo $call->id?>">
+                    @if ($call->status != 'W')
                     <button type="submit" class="btn-icon"><i class="now-ui-icons objects_key-25"></i></button>
+                    @endif
                 </form>
             </div>
         </td>

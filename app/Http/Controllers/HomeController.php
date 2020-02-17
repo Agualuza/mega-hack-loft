@@ -12,13 +12,24 @@ class HomeController extends Controller
   
     public function login(Request $request){
         $credentials = $request->only(['email','password']);
-        if (!Auth::attempt($credentials)) {
-            return redirect()
+        // if (!Auth::attempt($credentials)) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors('Usuário e/ou senha incorretos');
+        // } 
+        if(Auth::attempt($credentials)){
+            if(Auth::user()->type == "B"){
+                return redirect("/dashboard");
+            } else if(Auth::user()->type == "C"){
+                return redirect("/buy");
+            } else if(Auth::user()->type == "A"){
+                return redirect("/adm");
+            }
+        }
+
+        return redirect()
                 ->back()
                 ->withErrors('Usuário e/ou senha incorretos');
-        } 
-
-        return redirect("/dashboard");
     }
 
     public function index()
@@ -28,6 +39,10 @@ class HomeController extends Controller
             $type = $user->type;
             if($type == "B"){
                 return redirect("/dashboard");
+            } else if($type == "C"){
+                return redirect("/buy");
+            } else if($type == "A"){
+                return redirect("/adm");
             }
         }
         return view('home.index');

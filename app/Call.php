@@ -10,7 +10,7 @@ class Call extends Model
     protected $table = 'call';
     protected $arrayStatus = array(
         "C" => "Finalizada",
-        "W" => "Aguardando Atendimento",
+        "W" => "Aguardando",
         "O" => "Aberta",
         "K" => "Cancelada"
     );
@@ -38,6 +38,11 @@ class Call extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function broker()
+    {
+        return $this->belongsTo('App\Broker');
     }
 
     public function getUserName()

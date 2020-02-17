@@ -17,7 +17,8 @@ class DispatchEvent extends Migration
         $query = "
         SET GLOBAL event_scheduler = ON;
         CREATE OR REPLACE EVENT dispatch_event
-        ON SCHEDULE  EVERY 30 SECOND
+        ON SCHEDULE EVERY 30 SECOND
+        ON COMPLETION PRESERVE
         DO
         SELECT dispatch();
         ";

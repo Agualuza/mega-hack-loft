@@ -70,6 +70,11 @@ class Broker extends Model
         return $this->belongsTo('App\State');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function city()
     {
         return $this->belongsTo('App\City');
