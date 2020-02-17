@@ -6,15 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Broker;
 use App\Call;
+use App\City;
+use App\State;
+use App\CallProperty;
+use Illuminate\Support\Facades\DB;
 
 class CallController extends Controller
 {   
 
     public function index(){
         $user = Auth::user();
-        $broker = Broker::where('user_id',$user->id)->get()->first();
-        $calls = Call::where('broker_id',$broker->id)->orderBy('id','desc')->paginate(10);;
-        
+        if( $user->type == 'B') {
+            $broker = Broker::where('user_id',$user->id)->get()->first();
+            $calls = Call::where('broker_id',$broker->id)->orderBy('id','desc')->paginate(10);;
+        } else {
+            $calls = Call::where('user_id',$user->id)->orderBy('id','desc')->paginate(10);;
+            $broker = null;
+        }
+            
         $data = array(
             "broker" => $broker,
             "calls" => $calls
@@ -98,7 +107,7 @@ class CallController extends Controller
         $user = Auth::user();
         $cid = $request->input("call_id");
         $broker = Broker::where('user_id',$user->id)->get()->first();
-        $call = Call::where('id',$cid)->first();;
+        $call = Call::where('id',$cid)->first();
         
         $data = array(
             "broker" => $broker,
@@ -108,4 +117,23 @@ class CallController extends Controller
         
         return view("call.call",$data);
     }
+
+    public function create(Request $request){
+        $user = Auth::user();
+        $call = new Call();
+        $call_property = new CallProperty();
+        
+        $call->user_id = $user->id;
+        $call->status = 'W';
+        $call->save();
+        if($request->input("pid") != null){
+            $call_property->property_id = $request->input("pid");
+            $call_property->call_id = $call->id;
+            $call_property->save();
+        }
+
+        return redirect('/call');
+
+    }
+
 }

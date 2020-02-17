@@ -15,7 +15,7 @@ Perfil
             <form>
                 <button type="submit" class="btn btn-edit">Editar Perfil</button>
             </form>   
-            <h3 class="title" style="margin-top:0">Iago Agualuza</h3>
+            <h3 class="title" style="margin-top:0">{{$user->name}}</h3>
             <p class="category">{{$broker->creci}} CRECI{{$broker->state->abbreviation}}</p>
             <div class="content">
             <div class="social-description">

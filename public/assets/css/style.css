@@ -172,3 +172,17 @@
 .title-black {
     color: #000000;
 }
+
+.my-jumbotron {
+    background-color: transparent;
+    border: 1px solid #f96332;
+}
+
+.text-orange {
+    color: #f96332;
+}
+
+.lb {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}

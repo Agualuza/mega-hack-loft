@@ -30,4 +30,14 @@ class ProfileController extends Controller
 
         return view("profile.level",$data);
     }
+
+    public function user(){
+        $user = Auth::user();
+
+        $data = array(
+            'user' => $user
+        );
+
+        return view("profile.user",$data);
+    }
 }

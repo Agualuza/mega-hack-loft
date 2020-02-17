@@ -18,7 +18,14 @@ Chamada {{$call->id}}
 <div id="chat-div" class="col-lg-6 chat">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title box-title">Chat com {{$call->getUserName()}}</h4>
+                            <h4 class="card-title box-title">
+                                Chat com 
+                                @if ($broker)
+                                {{$call->getUserName()}}
+                                @else
+                                {{$call->broker->user->name}}
+                                @endif
+                            </h4>
                             <div class="card-content">
                                 <div id="messenger-box" class="messenger-box card-overflow-y">
                                 <h6 id="empty-chat" class="card-subtitle mb-2 text-muted">Ops! Vocês ainda não mandaram nenhuma mensagem =(</h6>
