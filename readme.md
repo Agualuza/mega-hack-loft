@@ -15,16 +15,10 @@ senha: 123456
 * requirements
 
 ``` 
-PHP >= 7.1.3
+ PHP >= 7.1.3
 
-```
-
-```
  MariaDB 10.1.25
 
-```
-
-```
  Laravel 5.8
 
 ```
