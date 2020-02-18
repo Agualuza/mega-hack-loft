@@ -1,5 +1,14 @@
 # MEGAHACK
 
+Usuários
+
+*Corretor
+email: corretor@fkmail.com
+senha: 123456
+
+*Usuário
+email: usuario@fkmail.com
+senha: 123456
 
 # Preparing enviroment
 
@@ -38,10 +47,5 @@
 	```
 	$ php artisan serve
 	```
-
-
-
-
-
 
 
